@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Housing Hues — Artist Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1A1C23;
+    --accent: #C5A059;
+    --accent-dim: #9c7f45;
+    --text: #333333;
+    --light-gray: #F9F9F9;
+    --border: #E0E0E0;
+    --danger: #b23b3b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: var(--primary);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .card {
+    width: 100%;
+    max-width: 480px;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .top {
+    background: var(--primary);
+    padding: 24px 24px 18px;
+    text-align: center;
+    border-bottom: 3px solid var(--accent);
+  }
+  .top h1 {
+    font-family: 'Playfair Display', serif;
+    color: white;
+    font-size: 18pt;
+    margin: 0 0 4px;
+    letter-spacing: 0.5px;
+  }
+  .top .sub {
+    color: var(--accent);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+  }
+  .progress-wrap {
+    padding: 14px 24px 0;
+  }
+  .progress-track {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+  .step-label {
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #999;
+    margin-top: 6px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .body {
+    padding: 24px;
+  }
+  .step { display: none; }
+  .step.active { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: translateY(0);} }
+  .step h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 14pt;
+    color: var(--primary);
+    margin: 0 0 4px;
+  }
+  .step .desc {
+    font-size: 9pt;
+    color: #777;
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
+  .field {
+    margin-bottom: 14px;
+  }
+  label {
+    display: block;
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 5px;
+  }
+  input[type="text"], input[type="email"], input[type="tel"], input[type="date"], textarea, select {
+    width: 100%;
+    padding: 11px 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 10.5pt;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--light-gray);
+    color: var(--text);
+  }
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: white;
+  }
+  textarea { resize: vertical; min-height: 70px; }
+  .hint { font-size: 8pt; color: #999; margin-top: 4px; }
+  .row2 { display: flex; gap: 10px; }
+  .row2 .field { flex: 1; }
+  .radio-group { display: flex; gap: 10px; flex-wrap: wrap; }
+  .radio-option {
+    flex: 1;
+    min-width: 100px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px;
+    text-align: center;
+    font-size: 9.5pt;
+    cursor: pointer;
+    background: var(--light-gray);
+  }
+  .radio-option input { display: none; }
+  .radio-option.selected {
+    border-color: var(--accent);
+    background: #fbf5e9;
+    font-weight: 600;
+    color: var(--accent-dim);
+  }
+  .party-note {
+    background: var(--light-gray);
+    border-left: 3px solid var(--accent);
+    padding: 12px 14px;
+    font-size: 8.5pt;
+    color: #666;
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+  .nav {
+    display: flex;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  button {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 9.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 13px 20px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    flex: 1;
+  }
+  .btn-primary {
+    background: var(--primary);
+    color: white;
+  }
+  .btn-primary:hover { background: #2a2d38; }
+  .btn-secondary {
+    background: transparent;
+    color: var(--primary);
+    border: 1px solid var(--border);
+  }
+  .btn-submit {
+    background: var(--accent);
+    color: var(--primary);
+  }
+  .checkbox-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 9pt;
+    color: #555;
+    margin-bottom: 12px;
+  }
+  .checkbox-line input { margin-top: 3px; }
+  .review-block {
+    background: var(--light-gray);
+    border-radius: 4px;
+    padding: 14px;
+    font-size: 9pt;
+    margin-bottom: 14px;
+  }
+  .review-block div { margin-bottom: 4px; }
+  .review-block strong { color: var(--primary); }
+  .success {
+    text-align: center;
+    padding: 20px 0;
+  }
+  .success h2 { font-family: 'Playfair Display', serif; color: var(--primary); }
+  .success p { font-size: 9.5pt; color: #666; }
+  .required-mark { color: var(--danger); }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="top">
+    <h1>Artist Onboarding</h1>
+    <div class="sub">Housing Hues — Talent Management</div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width: 14.28%;"></div></div>
+    <div class="step-label"><span id="stepLabel">Step 1 of 7</span><span id="stepName">Identity</span></div>
+  </div>
+
+  <div class="body">
+    <form id="onboardForm" action="https://formspree.io/housinghues@gmail.com" method="POST">
+
+      <!-- STEP 1: IDENTITY -->
+      <div class="step active" data-step="1">
+        <h2>Your Identity</h2>
+        <div class="desc">Legal details as they'll appear on your Artist Management Agreement.</div>
+
+        <div class="party-note">This form is used for both members of Music Xhefs. Please complete it individually — one submission per artist.</div>
+
+        <div class="field">
+          <label>Which artist are you? <span class="required-mark">*</span></label>
+          <div class="radio-group" id="artistSelect">
+            <label class="radio-option"><input type="radio" name="artist" value="Don Aarvi" required> Don Aarvi</label>
+            <label class="radio-option"><input type="radio" name="artist" value="Tshepi"> Tshepi</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Full Legal Name <span class="required-mark">*</span></label>
+          <input type="text" name="legal_name" placeholder="As it appears on your ID" required>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label>Date of Birth <span class="required-mark">*</span></label>
+            <input type="date" name="dob" required>
+          </div>
+          <div class="field">
+            <label>SA ID Number <span class="required-mark">*</span></label>
+            <input type="text" name="id_number" placeholder="13-digit ID" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Stage Name</label>
+          <input type="text" name="stage_name" value="" placeholder="e.g. Don Aarvi">
+        </div>
+      </div>
+
+      <!-- STEP 2: CONTACT -->
+      <div class="step" data-step="2">
+        <h2>Contact & Address</h2>
+        <div class="desc">How the Agency reaches you and where official correspondence is sent.</div>
+
+        <div class="field">
+          <label>Personal Email <span class="required-mark">*</span></label>
+          <input type="email" name="email" required>
+        </div>
+        <div class="field">
+          <label>Phone Number <span class="required-mark">*</span></label>
+          <input type="tel" name="phone" required>
+        </div>
+        <div class="field">
+          <label>Residential Address <span class="required-mark">*</span></label>
+          <textarea name="address" required></textarea>
+        </div>
+        <div class="field">
+          <label>Emergency Contact (Name + Number)</label>
+          <input type="text" name="emergency_contact" placeholder="e.g. Jane Doe — 082 000 0000">
+        </div>
+      </div>
+
+      <!-- STEP 3: SCREENING - CONFLICTS -->
+      <div class="step" data-step="3">
+        <h2>Existing Commitments</h2>
+        <div class="desc">Helps us keep your management agreement clean and avoid conflicts.</div>
+
+        <div class="field">
+          <label>Are you currently signed to another manager, agency, or label? <span class="required-mark">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="other_management" value="No" required> No</label>
+            <label class="radio-option"><input type="radio" name="other_management" value="Yes"> Yes</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>If yes, please give details</label>
+          <textarea name="other_management_details" placeholder="Who, since when, and current status"></textarea>
+        </div>
+        <div class="field">
+          <label>Any existing brand deals, sponsorships, or bookings already in place? <span class="required-mark">*</span></label>
+          <textarea name="existing_deals" placeholder="List any — these will be excluded from Agency commission if disclosed here" required></textarea>
+        </div>
+        <div class="field">
+          <label>Any pending legal disputes, contracts, or obligations Housing Hues should know about?</label>
+          <textarea name="legal_disclosures"></textarea>
+        </div>
+      </div>
+
+      <!-- STEP 4: SCREENING - BACKGROUND -->
+      <div class="step" data-step="4">
+        <h2>Background & References</h2>
+        <div class="desc">Standard checks before we formally bring you on.</div>
+
+        <div class="field">
+          <label>Have you previously worked with a manager or agency before? <span class="required-mark">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="prior_rep" value="No" required> No</label>
+            <label class="radio-option"><input type="radio" name="prior_rep" value="Yes"> Yes</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>If yes, who — and why did that relationship end?</label>
+          <textarea name="prior_rep_details"></textarea>
+        </div>
+        <div class="field">
+          <label>Reference Contact (industry reference, previous collaborator, or venue)</label>
+          <input type="text" name="reference_name" placeholder="Name">
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Reference Phone/Email</label>
+            <input type="text" name="reference_contact" placeholder="Phone or email">
+          </div>
+          <div class="field">
+            <label>Relationship</label>
+            <input type="text" name="reference_relationship" placeholder="e.g. venue owner, promoter">
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 5: BANKING -->
+      <div class="step" data-step="5">
+        <h2>Payment Details</h2>
+        <div class="desc">Where your share of income is paid out. Kept confidential.</div>
+
+        <div class="field">
+          <label>Bank Name <span class="required-mark">*</span></label>
+          <input type="text" name="bank_name" required>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Account Holder <span class="required-mark">*</span></label>
+            <input type="text" name="account_holder" required>
+          </div>
+          <div class="field">
+            <label>Account Number <span class="required-mark">*</span></label>
+            <input type="text" name="account_number" required>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Branch Code</label>
+            <input type="text" name="branch_code">
+          </div>
+          <div class="field">
+            <label>Account Type</label>
+            <input type="text" name="account_type" placeholder="e.g. Cheque, Savings">
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 6: SOCIAL & DIGITAL ACCESS -->
+      <div class="step" data-step="6">
+        <h2>Social & Digital Access</h2>
+        <div class="desc">Per the Agreement, Housing Hues manages your professional social accounts.</div>
+
+        <div class="field">
+          <label>Instagram Handle</label>
+          <input type="text" name="instagram" placeholder="@">
+        </div>
+        <div class="field">
+          <label>TikTok Handle</label>
+          <input type="text" name="tiktok" placeholder="@">
+        </div>
+        <div class="field">
+          <label>YouTube / Music Platforms (Spotify, Apple Music, etc.)</label>
+          <textarea name="platforms" placeholder="Links or handles"></textarea>
+        </div>
+        <div class="checkbox-line">
+          <input type="checkbox" name="admin_access_confirm" value="Confirmed" id="adminAccess">
+          <label for="adminAccess" style="text-transform:none; font-weight:400; margin:0;">I understand I'll be asked to grant admin/collaborator access to the above accounts to Housing Hues.</label>
+        </div>
+      </div>
+
+      <!-- STEP 7: REVIEW & CONSENT -->
+      <div class="step" data-step="7">
+        <h2>Review & Consent</h2>
+        <div class="desc">Last step — confirm and submit.</div>
+
+        <div class="review-block" id="reviewSummary">
+          <div>Details will be summarized here before you submit.</div>
+        </div>
+
+        <div class="checkbox-line">
+          <input type="checkbox" name="info_accurate" value="Confirmed" required id="infoAccurate">
+          <label for="infoAccurate" style="text-transform:none; font-weight:400; margin:0;">I confirm the information provided is accurate and complete to the best of my knowledge.</label>
+        </div>
+        <div class="checkbox-line">
+          <input type="checkbox" name="agreement_ack" value="Confirmed" required id="agreementAck">
+          <label for="agreementAck" style="text-transform:none; font-weight:400; margin:0;">I understand this onboarding form precedes, and does not replace, my signed Artist Management Agreement with Housing Hues.</label>
+        </div>
+      </div>
+
+      <div class="nav">
+        <button type="button" class="btn-secondary" id="backBtn" style="display:none;">Back</button>
+        <button type="button" class="btn-primary" id="nextBtn">Continue</button>
+        <button type="submit" class="btn-submit" id="submitBtn" style="display:none;">Submit</button>
+      </div>
+    </form>
+
+    <div class="success" id="successMessage" style="display:none;">
+      <h2>You're in.</h2>
+      <p>Thanks — your onboarding details have been sent to Housing Hues. Lesego will follow up directly once your Artist Management Agreement is ready to sign.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const steps = document.querySelectorAll('.step');
+  const totalSteps = steps.length;
+  let current = 1;
+
+  const stepNames = {
+    1: 'Identity', 2: 'Contact', 3: 'Conflicts', 4: 'Background',
+    5: 'Payment', 6: 'Social', 7: 'Review'
+  };
+
+  const progressFill = document.getElementById('progressFill');
+  const stepLabel = document.getElementById('stepLabel');
+  const stepName = document.getElementById('stepName');
+  const backBtn = document.getElementById('backBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  const form = document.getElementById('onboardForm');
+
+  // radio-option visual toggle
+  document.querySelectorAll('.radio-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const group = opt.querySelector('input').name;
+      document.querySelectorAll(`input[name="${group}"]`).forEach(inp => {
+        inp.closest('.radio-option').classList.remove('selected');
+      });
+      opt.classList.add('selected');
+      opt.querySelector('input').checked = true;
+    });
+  });
+
+  function showStep(n) {
+    steps.forEach(s => s.classList.remove('active'));
+    document.querySelector(`.step[data-step="${n}"]`).classList.add('active');
+    progressFill.style.width = (n / totalSteps * 100) + '%';
+    stepLabel.textContent = `Step ${n} of ${totalSteps}`;
+    stepName.textContent = stepNames[n];
+    backBtn.style.display = n === 1 ? 'none' : 'block';
+    nextBtn.style.display = n === totalSteps ? 'none' : 'block';
+    submitBtn.style.display = n === totalSteps ? 'block' : 'none';
+    if (n === totalSteps) buildReview();
+  }
+
+  function validateStep(n) {
+    const stepEl = document.querySelector(`.step[data-step="${n}"]`);
+    const requiredFields = stepEl.querySelectorAll('[required]');
+    for (const field of requiredFields) {
+      if (field.type === 'radio') {
+        const group = stepEl.querySelectorAll(`input[name="${field.name}"]`);
+        const checked = Array.from(group).some(r => r.checked);
+        if (!checked) { alert('Please answer all required fields before continuing.'); return false; }
+      } else if (!field.value.trim()) {
+        field.style.borderColor = '#b23b3b';
+        alert('Please fill in all required fields before continuing.');
+        return false;
+      }
+    }
+    return true;
+  }
+
+  nextBtn.addEventListener('click', () => {
+    if (!validateStep(current)) return;
+    if (current < totalSteps) { current++; showStep(current); }
+  });
+
+  backBtn.addEventListener('click', () => {
+    if (current > 1) { current--; showStep(current); }
+  });
+
+  function buildReview() {
+    const data = new FormData(form);
+    const get = k => data.get(k) || '—';
+    const summary = document.getElementById('reviewSummary');
+    summary.innerHTML = `
+      <div><strong>Artist:</strong> ${get('artist')}</div>
+      <div><strong>Legal Name:</strong> ${get('legal_name')}</div>
+      <div><strong>Email:</strong> ${get('email')}</div>
+      <div><strong>Phone:</strong> ${get('phone')}</div>
+      <div><strong>Other Management:</strong> ${get('other_management')}</div>
+      <div><strong>Bank:</strong> ${get('bank_name')}</div>
+    `;
+  }
+
+  form.addEventListener('submit', function(e) {
+    if (!validateStep(current)) { e.preventDefault(); return; }
+    e.preventDefault();
+    const data = new FormData(form);
+    fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      form.style.display = 'none';
+      document.querySelector('.progress-wrap').style.display = 'none';
+      document.getElementById('successMessage').style.display = 'block';
+    }).catch(() => {
+      alert('Something went wrong submitting the form. Please check your connection and try again.');
+    });
+  });
+
+  showStep(1);
+</script>
+
+</body>
+</html>
