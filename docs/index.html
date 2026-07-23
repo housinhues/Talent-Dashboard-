@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Housing Hues — Artist Onboarding</title>
+<title>Housing Hues — Talent Onboarding</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <style>
@@ -218,7 +218,7 @@
 
 <div class="card">
   <div class="top">
-    <h1>Artist Onboarding</h1>
+    <h1>Talent Onboarding</h1>
     <div class="sub">Housing Hues — Talent Management</div>
   </div>
 
@@ -233,17 +233,7 @@
       <!-- STEP 1: IDENTITY -->
       <div class="step active" data-step="1">
         <h2>Your Identity</h2>
-        <div class="desc">Legal details as they'll appear on your Artist Management Agreement.</div>
-
-        <div class="party-note">This form is used for both members of Music Xhefs. Please complete it individually — one submission per artist.</div>
-
-        <div class="field">
-          <label>Which artist are you? <span class="required-mark">*</span></label>
-          <div class="radio-group" id="artistSelect">
-            <label class="radio-option"><input type="radio" name="artist" value="Don Aarvi" required> Don Aarvi</label>
-            <label class="radio-option"><input type="radio" name="artist" value="Tshepi"> Tshepi</label>
-          </div>
-        </div>
+        <div class="desc">Legal details as they'll appear on your Talent Management Agreement.</div>
 
         <div class="field">
           <label>Full Legal Name <span class="required-mark">*</span></label>
@@ -263,7 +253,7 @@
 
         <div class="field">
           <label>Stage Name</label>
-          <input type="text" name="stage_name" value="" placeholder="e.g. Don Aarvi">
+          <input type="text" name="stage_name" value="" placeholder="e.g. your stage or professional name">
         </div>
       </div>
 
@@ -393,7 +383,7 @@
           <input type="text" name="tiktok" placeholder="@">
         </div>
         <div class="field">
-          <label>YouTube / Music Platforms (Spotify, Apple Music, etc.)</label>
+          <label>Portfolio / Platform Links (YouTube, Spotify, modeling portfolio, etc.)</label>
           <textarea name="platforms" placeholder="Links or handles"></textarea>
         </div>
         <div class="checkbox-line">
@@ -417,7 +407,7 @@
         </div>
         <div class="checkbox-line">
           <input type="checkbox" name="agreement_ack" value="Confirmed" required id="agreementAck">
-          <label for="agreementAck" style="text-transform:none; font-weight:400; margin:0;">I understand this onboarding form precedes, and does not replace, my signed Artist Management Agreement with Housing Hues.</label>
+          <label for="agreementAck" style="text-transform:none; font-weight:400; margin:0;">I understand this onboarding form precedes, and does not replace, my signed Talent Management Agreement with Housing Hues.</label>
         </div>
       </div>
 
@@ -430,7 +420,7 @@
 
     <div class="success" id="successMessage" style="display:none;">
       <h2>You're in.</h2>
-      <p>Thanks — your onboarding details have been sent to Housing Hues. Lesego will follow up directly once your Artist Management Agreement is ready to sign.</p>
+      <p>Thanks — your onboarding details have been sent to Housing Hues. Our team will follow up directly once your Talent Management Agreement is ready to sign.</p>
     </div>
   </div>
 </div>
@@ -454,14 +444,12 @@
   const form = document.getElementById('onboardForm');
 
   // radio-option visual toggle
-  document.querySelectorAll('.radio-option').forEach(opt => {
-    opt.addEventListener('click', () => {
-      const group = opt.querySelector('input').name;
-      document.querySelectorAll(`input[name="${group}"]`).forEach(inp => {
+  document.querySelectorAll('.radio-option input').forEach(input => {
+    input.addEventListener('change', () => {
+      document.querySelectorAll(`input[name="${input.name}"]`).forEach(inp => {
         inp.closest('.radio-option').classList.remove('selected');
       });
-      opt.classList.add('selected');
-      opt.querySelector('input').checked = true;
+      input.closest('.radio-option').classList.add('selected');
     });
   });
 
@@ -508,12 +496,19 @@
     const get = k => data.get(k) || '—';
     const summary = document.getElementById('reviewSummary');
     summary.innerHTML = `
-      <div><strong>Artist:</strong> ${get('artist')}</div>
       <div><strong>Legal Name:</strong> ${get('legal_name')}</div>
+      <div><strong>Stage Name:</strong> ${get('stage_name')}</div>
+      <div><strong>Date of Birth:</strong> ${get('dob')}</div>
+      <div><strong>ID Number:</strong> ${get('id_number')}</div>
       <div><strong>Email:</strong> ${get('email')}</div>
       <div><strong>Phone:</strong> ${get('phone')}</div>
+      <div><strong>Address:</strong> ${get('address')}</div>
       <div><strong>Other Management:</strong> ${get('other_management')}</div>
+      <div><strong>Prior Representation:</strong> ${get('prior_rep')}</div>
       <div><strong>Bank:</strong> ${get('bank_name')}</div>
+      <div><strong>Account Holder:</strong> ${get('account_holder')}</div>
+      <div><strong>Instagram:</strong> ${get('instagram')}</div>
+      <div><strong>TikTok:</strong> ${get('tiktok')}</div>
     `;
   }
 
