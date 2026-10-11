@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Housing Hues — Talent Sign-Up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1A1C23;
+    --accent: #C5A059;
+    --accent-dim: #9c7f45;
+    --text: #333333;
+    --light-gray: #F9F9F9;
+    --border: #E0E0E0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: var(--primary);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .card {
+    width: 100%;
+    max-width: 480px;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .top {
+    background: var(--primary);
+    padding: 26px 24px 20px;
+    text-align: center;
+    border-bottom: 3px solid var(--accent);
+  }
+  .top h1 {
+    font-family: 'Playfair Display', serif;
+    color: white;
+    font-size: 19pt;
+    margin: 0 0 4px;
+    letter-spacing: 0.5px;
+  }
+  .top .sub {
+    color: var(--accent);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+  }
+  .body { padding: 26px 24px; }
+  .intro {
+    font-size: 9.5pt;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  .field { margin-bottom: 15px; }
+  label {
+    display: block;
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 5px;
+  }
+  input[type="text"], input[type="email"], input[type="tel"], textarea, select {
+    width: 100%;
+    padding: 11px 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 10.5pt;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--light-gray);
+    color: var(--text);
+  }
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: white;
+  }
+  textarea { resize: vertical; min-height: 70px; }
+  .row2 { display: flex; gap: 10px; }
+  .row2 .field { flex: 1; }
+  .checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; }
+  .checkbox-option {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 9.5pt;
+    cursor: pointer;
+    background: var(--light-gray);
+  }
+  .checkbox-option input { display: none; }
+  .checkbox-option.selected {
+    border-color: #D6336C;
+    background: #fbe9f1;
+    font-weight: 600;
+    color: #D6336C;
+  }
+  button {
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 9.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 14px 20px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    background: var(--accent);
+    color: var(--primary);
+    margin-top: 8px;
+  }
+  button:hover { background: var(--accent-dim); color: white; }
+  .success { text-align: center; padding: 20px 0; }
+  .success h2 { font-family: 'Playfair Display', serif; color: var(--primary); }
+  .success p { font-size: 9.5pt; color: #666; }
+  .required-mark { color: #b23b3b; }
+  .disclaimer {
+    font-size: 7.5pt;
+    color: #999;
+    margin-top: 14px;
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="top">
+    <h1>Zomme Talente-Sqeta</h1>
+    <div class="sub">House In Use - Open Call</div>
+  </div>
+
+  <div class="body">
+    <div class="intro" id="introText">
+      We're scouting creatives across music, modeling, and beyond. Fill this in and our team will be in touch if there's a fit.
+    </div>
+
+    <form id="signupForm" action="https://formspree.io/f/xqevaogo" method="POST">
+      <input type="hidden" name="form_type" value="talent_signup">
+      <input type="hidden" name="_subject" id="subjectField" value="New Talent Sign-Up">
+
+      <div class="field">
+        <label>Full Name <span class="required-mark">*</span></label>
+        <input type="text" name="full_name" required>
+      </div>
+
+      <div class="field">
+        <label>Stage / Professional Name (if any)</label>
+        <input type="text" name="stage_name">
+      </div>
+
+      <div class="field">
+        <label>Date of Birth <span class="required-mark">*</span></label>
+        <input type="date" name="dob" id="dobField" required>
+        <div class="hint" id="minorNote" style="display:none; color:#b23b3b;">Thanks — since you're under 18, our team will follow up directly with you and a parent/guardian before any next ste[...]
+      </div>
+
+      <div class="field">
+        <label>Location <span class="required-mark">*</span></label>
+        <select name="location" required>
+          <option value="" disabled selected>Select area</option>
+          <optgroup label="KOSH — Matlosana District, North West">
+            <option value="Klerksdorp">Klerksdorp</option>
+            <option value="Orkney">Orkney</option>
+            <option value="Stilfontein">Stilfontein</option>
+            <option value="Hartbeesfontein">Hartbeesfontein</option>
+          </optgroup>
+          <option value="Other North West">Other — North West</option>
+          <option value="Outside North West">Outside North West</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>What kind of creative are you? <span class="required-mark">*</span></label>
+        <div class="hint" style="margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px; font-weight:600;">Talent</div>
+        <div class="checkbox-group" id="disciplineGroupTalent">
+          <label class="checkbox-option"><input type="checkbox" name="discipline" value="Music"> Music</label>
+          <label class="checkbox-option"><input type="checkbox" name="discipline" value="Modeling"> Modeling</label>
+          <label class="checkbox-option"><input type="checkbox" name="discipline" value="Dance"> Dance</label>
+          <label class="checkbox-option"><input type="checkbox" name="discipline" value="Content/Influencer"> Content/Influencer</label>
+        </div>
+        <div class="hint" style="margin:10px 0 6px; text-transform:uppercase; letter-spacing:0.5px; font-weight:600;">Production &amp; Crew</div>
+        <div class="checkbox-group" id="disciplineGroupCrew">
+          <label class="checkbox-option"><input type="checkbox" name="discipline" value="Photography"> Photography</label>
+          <label class="checkbox-option"><input type="checkbox" name="discipline" value="Videography"> Videography</label>
+          <label class="checkbox-option"><input type="checkbox" name="discipline" value="Graphic Design"> Graphic Design</label>
+          <label class="checkbox-option"><input type="checkbox" name="discipline" value="Styling/MUA"> Styling/MUA</label>
+        </div>
+        <div class="checkbox-group" id="disciplineGroupOther" style="margin-top:10px;">
+          <label class="checkbox-option"><input type="checkbox" name="discipline" value="Other"> Other</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Gender <span class="required-mark">*</span></label>
+        <div class="checkbox-group">
+          <label class="checkbox-option"><input type="radio" name="gender" value="Male" required> Male</label>
+          <label class="checkbox-option"><input type="radio" name="gender" value="Female"> Female</label>
+          <label class="checkbox-option"><input type="radio" name="gender" value="Prefer not to say"> Prefer not to say</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Do you have school or work commitments?</label>
+        <div class="checkbox-group">
+          <label class="checkbox-option"><input type="checkbox" name="commitments" value="School"> School</label>
+          <label class="checkbox-option"><input type="checkbox" name="commitments" value="Work"> Work</label>
+          <label class="checkbox-option"><input type="checkbox" name="commitments" value="Neither"> Neither</label>
+        </div>
+      </div>
+
+      <div class="field" id="influencerFields" style="display:none;">
+        <label>Platform</label>
+        <input type="text" name="influencer_platform" placeholder="e.g. Instagram, TikTok, YouTube">
+        <div class="hint">Rough Follower Count</div>
+        <select name="follower_tier">
+          <option value="" disabled selected>Select range</option>
+          <option value="Under 1k">Under 1k</option>
+          <option value="1k - 10k">1k – 10k</option>
+          <option value="10k - 50k">10k – 50k</option>
+          <option value="50k - 100k">50k – 100k</option>
+          <option value="100k+">100k+</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Experience Level <span class="required-mark">*</span></label>
+        <div class="checkbox-group" id="experienceGroup">
+          <label class="checkbox-option"><input type="radio" name="experience_level" value="New"> New</label>
+          <label class="checkbox-option"><input type="radio" name="experience_level" value="Some experience"> Some experience</label>
+          <label class="checkbox-option"><input type="radio" name="experience_level" value="Professional"> Pro</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Availability <span class="required-mark">*</span></label>
+        <div class="checkbox-group" id="availabilityGroup">
+          <label class="checkbox-option"><input type="radio" name="availability" value="Weekends only"> Weekends only</label>
+          <label class="checkbox-option"><input type="radio" name="availability" value="Flexible"> Flexible</label>
+          <label class="checkbox-option"><input type="radio" name="availability" value="Full-time"> Full-time</label>
+        </div>
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label>Email <span class="required-mark">*</span></label>
+          <input type="email" name="email" required>
+        </div>
+        <div class="field">
+          <label>Phone <span class="required-mark">*</span></label>
+          <input type="tel" name="phone" placeholder="082 000 0000" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Instagram / TikTok / Portfolio Link</label>
+        <input type="text" name="social_link" placeholder="@handle or URL">
+      </div>
+
+      <div class="field">
+        <label>Which platform are you most active on? <span class="required-mark">*</span></label>
+        <div class="checkbox-group">
+          <label class="checkbox-option"><input type="radio" name="most_active_platform" value="Instagram" required> Instagram</label>
+          <label class="checkbox-option"><input type="radio" name="most_active_platform" value="TikTok"> TikTok</label>
+          <label class="checkbox-option"><input type="radio" name="most_active_platform" value="Facebook"> Facebook</label>
+          <label class="checkbox-option"><input type="radio" name="most_active_platform" value="YouTube"> YouTube</label>
+          <label class="checkbox-option"><input type="radio" name="most_active_platform" value="Other"> Other</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Tell us about yourself <span class="required-mark">*</span></label>
+        <textarea name="bio" placeholder="A few lines: what you do, how long, what you're looking for" required></textarea>
+      </div>
+
+      <div class="field">
+        <label>Currently signed to another manager or agency?</label>
+        <div class="checkbox-group">
+          <label class="checkbox-option"><input type="radio" name="other_management" value="No"> No</label>
+          <label class="checkbox-option"><input type="radio" name="other_management" value="Yes"> Yes</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>How did you hear about us?</label>
+        <select name="referral_source">
+          <option value="" disabled selected>Select one</option>
+          <option value="Instagram">Instagram</option>
+          <option value="TikTok">TikTok</option>
+          <option value="Facebook">Facebook</option>
+          <option value="Word of mouth">Word of mouth</option>
+          <option value="An event">An event</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <input type="hidden" name="is_minor" id="isMinorField" value="">
+
+      <button type="submit">Submit</button>
+
+      <div class="disclaimer">
+        Submitting this form does not create any management or representation agreement. It's an expression of interest only — Housing Hues will follow up directly if there's a fit.
+      </div>
+    </form>
+
+    <div class="success" id="successMessage" style="display:none;">
+      <h2>E wetse.</h2>
+      <p>Danko for signing up — O tla utlwa ka rona if you a fit for spane.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.checkbox-option input').forEach(input => {
+    input.addEventListener('change', () => {
+      const opt = input.closest('.checkbox-option');
+      if (input.type === 'radio') {
+        document.querySelectorAll(`input[name="${input.name}"]`).forEach(r => r.closest('.checkbox-option').classList.remove('selected'));
+        opt.classList.add('selected');
+      } else {
+        opt.classList.toggle('selected', input.checked);
+      }
+    });
+  });
+
+  function isValidPhone(value) {
+    const clean = value.replace(/[\s-]+/g, '');
+    return /(^\+27\d{9}|^0\d{9})$/.test(clean);
+  }
+
+  document.querySelectorAll('input[name="discipline"]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const isInfluencer = document.querySelector('input[name="discipline"][value="Content/Influencer"]').checked;
+      document.getElementById('influencerFields').style.display = isInfluencer ? 'block' : 'none';
+    });
+  });
+
+  const dobInput = document.getElementById('dobField');
+  dobInput.addEventListener('change', () => {
+    const dob = new Date(dobInput.value);
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    const m = today.getMonth() - dob.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+    const isMinor = age < 18;
+    document.getElementById('minorNote').style.display = isMinor ? 'block' : 'none';
+    document.getElementById('isMinorField').value = isMinor ? 'Yes' : 'No';
+  });
+
+  const form = document.getElementById('signupForm');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const phoneField = form.querySelector('input[name="phone"]');
+    if (!isValidPhone(phoneField.value.trim())) {
+      phoneField.style.borderColor = '#b23b3b';
+      alert('Enter a valid phone number, e.g. 082 000 0000 or +27 82 000 0000.');
+      phoneField.focus();
+      return;
+    }
+    phoneField.style.borderColor = '';
+
+    const disciplines = Array.from(form.querySelectorAll('input[name="discipline"]:checked'));
+    if (disciplines.length === 0) {
+      alert('Please select at least one discipline.');
+      return;
+    }
+
+    if (!form.querySelector('input[name="experience_level"]:checked')) {
+      alert('Please select an experience level.');
+      return;
+    }
+
+    if (!form.querySelector('input[name="availability"]:checked')) {
+      alert('Please select availability.');
+      return;
+    }
+
+    const fullName = form.querySelector('input[name="full_name"]').value.trim();
+    document.getElementById('subjectField').value =
+      `Talent Sign-Up — ${disciplines.map(d => d.value).join('/')} — ${fullName}`;
+
+    const data = new FormData(form);
+    fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      form.style.display = 'none';
+      document.getElementById('successMessage').style.display = 'block';
+    }).catch(() => {
+      alert('Something went wrong submitting the form. Please check your connection and try again.');
+    });
+  });
+</script>
+
+</body>
+</html>

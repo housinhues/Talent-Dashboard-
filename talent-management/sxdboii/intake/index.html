@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Housing Hues — Talent Management Intake · SXDBOII</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f1ebdc;
+    --surface: #ffffff;
+    --ink: #171310;
+    --ink-soft: #695f50;
+    --border: #e2d7c1;
+    --accent: #de5f22;
+    --accent-dark: #b8481a;
+    --accent-soft: #fbe4d2;
+    --warn-bg: #fdeee1;
+    --warn-ink: #b8481a;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #15110c; --surface: #201a13; --ink: #f4ecdf; --ink-soft: #bcac93;
+      --border: #3c3120; --accent: #ef7538; --accent-soft: #3a2416;
+      --warn-bg: #2c1c10; --warn-ink: #ef7538;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #15110c; --surface: #201a13; --ink: #f4ecdf; --ink-soft: #bcac93;
+    --border: #3c3120; --accent: #ef7538; --accent-soft: #3a2416;
+    --warn-bg: #2c1c10; --warn-ink: #ef7538;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.5;
+  }
+  .display { font-family: 'Anton', 'Inter', sans-serif; text-transform: uppercase; }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative; overflow: hidden; background: var(--bg);
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .hero-inner {
+    max-width: 980px; margin: 0 auto; position: relative;
+    display: grid; grid-template-columns: 1fr; 
+  }
+  .brush {
+    position: absolute; inset: 0; z-index: 0; opacity: 0.9; pointer-events: none;
+    background:
+      repeating-linear-gradient(115deg,
+        transparent 0 18px,
+        rgba(216,90,30,0.16) 18px 22px,
+        transparent 22px 46px,
+        rgba(184,72,26,0.28) 46px 54px,
+        transparent 54px 90px);
+    -webkit-mask-image: linear-gradient(115deg, black 0%, black 35%, transparent 60%);
+    mask-image: linear-gradient(115deg, black 0%, black 35%, transparent 60%);
+  }
+  .hero-top { position: relative; z-index: 2; padding: 22px 20px 0; text-align: center; }
+  .eyebrow-hero {
+    font-family: 'Inter', sans-serif; font-weight: 700; font-size: 0.78rem;
+    letter-spacing: 0.5em; padding-left: 0.5em; color: var(--ink); text-align: center;
+  }
+  .wordmark {
+    position: relative; z-index: 2; text-align: center; line-height: 0.82;
+    font-size: clamp(3.2rem, 15vw, 6rem); margin: 6px 0 0; letter-spacing: -0.01em;
+  }
+  .wordmark .sxd { color: var(--accent); text-shadow: 2px 2px 0 rgba(0,0,0,0.08); }
+  .wordmark .boii { color: var(--ink); }
+
+  .hero-photo-wrap {
+    position: relative; z-index: 1; margin-top: 8px;
+    display: flex; justify-content: center;
+  }
+  .hero-photo-wrap img {
+    width: 100%; max-width: 560px; display: block;
+  }
+  .hero-tag {
+    position: relative; z-index: 2; text-align: right; padding: 0 22px 8px;
+    margin-top: -18vw;
+  }
+  .hero-tag .line {
+    font-size: clamp(1.6rem, 6.5vw, 2.4rem); line-height: 1.02;
+    color: transparent; -webkit-text-stroke: 1.5px var(--accent); 
+    font-family: 'Anton', sans-serif; letter-spacing: 0.01em;
+  }
+  .hero-caption {
+    position: relative; z-index: 2; max-width: 640px; margin: 18px auto 0; padding: 0 20px 26px;
+    text-align: center; color: var(--ink-soft); font-size: 0.9rem;
+  }
+  .hero-caption b { color: var(--ink); }
+
+  /* ===== BODY ===== */
+  .wrap { max-width: 720px; margin: 0 auto; padding: 8px 16px 60px; }
+  .flag {
+    background: var(--warn-bg); color: var(--warn-ink); border-radius: 10px;
+    padding: 12px 14px; font-size: 0.85rem; margin: 10px 0 18px; border: 1px solid var(--accent);
+  }
+  .flag strong { display: block; margin-bottom: 3px; font-family: 'Anton', sans-serif; letter-spacing: 0.02em; text-transform: uppercase; font-size: 0.8rem; }
+  .progress { display: flex; gap: 6px; margin: 18px 0 4px; }
+  .progress div { flex: 1; height: 4px; border-radius: 2px; background: var(--border); }
+  .progress div.done { background: var(--accent); }
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 24px; }
+  .tab-btn {
+    font: inherit; font-weight: 600; font-size: 0.8rem; padding: 7px 13px; border-radius: 999px;
+    border: 1.5px solid var(--border); background: var(--surface); color: var(--ink-soft); cursor: pointer;
+  }
+  .tab-btn.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  section.card {
+    background: var(--surface); border: 1.5px solid var(--border); border-radius: 16px;
+    padding: 22px; margin-bottom: 20px;
+  }
+  section.card h2 {
+    font-family: 'Anton', sans-serif; text-transform: uppercase; letter-spacing: 0.02em;
+    font-size: 1.3rem; margin: 0 0 4px; color: var(--ink);
+  }
+  section.card p.hint { color: var(--ink-soft); font-size: 0.84rem; margin: 0 0 16px; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--ink-soft); margin-bottom: 5px; }
+  input[type=text], input[type=date], input[type=number], input[type=email], textarea, select {
+    width: 100%; font: inherit; font-size: 0.95rem; padding: 10px 12px;
+    border-radius: 8px; border: 1.5px solid var(--border); background: var(--bg); color: var(--ink);
+  }
+  input:focus, textarea:focus { outline: none; border-color: var(--accent); }
+  textarea { min-height: 64px; resize: vertical; }
+  .choice-group { display: flex; gap: 8px; flex-wrap: wrap; }
+  .choice {
+    border: 1.5px solid var(--border); background: var(--bg); color: var(--ink);
+    padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 0.88rem; font-weight: 500;
+  }
+  .choice.selected { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; margin: 26px 0; }
+  button.primary, button.secondary {
+    font: inherit; font-weight: 700; font-size: 0.92rem; padding: 13px 22px; border-radius: 10px; cursor: pointer; border: none;
+  }
+  button.primary { background: var(--accent); color: #fff; }
+  button.primary:active { background: var(--accent-dark); }
+  button.secondary { background: transparent; color: var(--ink); border: 1.5px solid var(--border); }
+  .save-status { font-size: 0.78rem; color: var(--ink-soft); }
+  .note { font-size: 0.78rem; color: var(--ink-soft); margin-top: 30px; border-top: 1px solid var(--border); padding-top: 14px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="brush"></div>
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div class="eyebrow-hero">TALENT INTAKE</div>
+      <h1 class="wordmark"><span class="sxd">SXD</span><span class="boii">BOII</span></h1>
+    </div>
+    <div class="hero-photo-wrap">
+      <img src="../assets/sxdb-oii-hero.jpg" alt="SXDBOII — Book Now poster">
+    </div>
+    <div class="hero-tag">
+      <div class="line">SIGN</div>
+      <div class="line">SET</div>
+      <div class="line">SORTED!</div>
+    </div>
+    <p class="hero-caption">This collects the fields the <b>Housing Hues</b> management-agreement reference draws on. It doesn't draft anything — once both sides finish, submit it and bring the[...]
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="flag">
+    <strong>Before submitting</strong>
+    Confirm the talent's legal name (two different spellings are on file) and check any existing publishing/distribution deal against the exclusivity scope below — per house process, a "No" on [...]
+  </div>
+  <div class="progress" id="progressBar"></div>
+  <div class="save-status" id="saveStatus"></div>
+
+  <div class="tabs" id="tabs"></div>
+  <div id="sections"></div>
+
+  <div class="actions">
+    <button class="primary" id="submitBtn">Send intake to Housing Hues</button>
+    <button class="secondary" id="clearBtn">Clear all answers</button>
+  </div>
+  <p class="save-status" id="sendStatus"></p>
+
+  <p class="note">Fields marked "internal record" are kept on the talent's file, not written into the agreement text, per house process. Compensation is decided for this intake — no standing co[...]
+</div>
+
+<script>
+(function () {
+  const DEST_EMAIL = 'housinghues@gmail.com';
+
+  const sectionsDef = [
+    {
+      id: 'identity', title: 'Talent Identity', hint: 'Core party details for the agreement header.',
+      fields: [
+        {id:'legal_name', label:'Legal name', type:'text'},
+        {id:'stage_name', label:'Stage name', type:'text'},
+        {id:'dob', label:'Date of birth (required before drafting — stop if talent is a minor)', type:'date'},
+        {id:'discipline', label:'Discipline(s) (e.g. Music, Modeling) — defines scope of representation', type:'text'},
+      ]
+    },
+    {
+      id: 'representation', title: 'Existing Representation', hint: 'Check before granting any exclusivity.',
+      fields: [
+        {id:'other_management', label:'Currently under other management?', type:'choice', options:['No','Yes']},
+        {id:'existing_deals', label:'Any existing deals (publishing, distribution, brand, etc.)?', type:'textarea'},
+        {id:'prior_rep_details', label:'Prior representation details (who, when, how it ended)', type:'textarea'},
+      ]
+    },
+    {
+      id: 'social', title: 'Social Media', hint: 'Feeds the posting-tier clause.',
+      fields: [
+        {id:'instagram', label:'Instagram handle', type:'text'},
+        {id:'tiktok', label:'TikTok handle', type:'text'},
+        {id:'social_link', label:'Other primary social link', type:'text'},
+        {id:'posting_tier', label:'Posting tier', type:'choice', options:['Managed — Agency has approval rights on brand-relevant posts','Independent — Talent retains full posting control']},
+      ]
+    },
+    {
+      id: 'compensation', title: 'Compensation', hint: 'Decided for this intake — locked, not editable here.',
+      fields: [
+        {id:'commission_choice', label:'Standing commission on future engagements?', type:'locked'},
+      ]
+    },
+    {
+      id: 'internal', title: 'Internal Record Only', hint: 'Kept on the talent\'s file — not written into the agreement text.',
+      fields: [
+        {id:'id_number', label:'ID number', type:'text'},
+        {id:'banking_details', label:'Banking details', type:'text'},
+        {id:'emergency_contact', label:'Emergency contact', type:'text'},
+      ]
+    },
+    {
+      id: 'notes', title: 'Anything Else', hint: 'Optional — flag anything that doesn\'t fit above.',
+      fields: [
+        {id:'extra_notes', label:'Additional notes', type:'textarea'},
+      ]
+    }
+  ];
+
+  const state = {
+    stage_name: 'Sxdboii',
+    commission_choice: 'No — compensation set fresh per engagement contract, this agreement stays silent on money',
+  };
+  const sectionsEl = document.getElementById('sections');
+  const tabsEl = document.getElementById('tabs');
+  const progressEl = document.getElementById('progressBar');
+  const saveStatus = document.getElementById('saveStatus');
+  let currentIdx = 0;
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem('talentIntakeDraft');
+      if (raw) Object.assign(state, JSON.parse(raw));
+      saveStatus.textContent = raw ? 'Draft restored from this device.' : '';
+    } catch (e) {}
+  }
+  function saveState() {
+    try {
+      localStorage.setItem('talentIntakeDraft', JSON.stringify(state));
+      saveStatus.textContent = 'Saved on this device.';
+    } catch (e) { saveStatus.textContent = ''; }
+  }
+
+  function renderTabs() {
+    tabsEl.innerHTML = '';
+    sectionsDef.forEach((s, i) => {
+      const b = document.createElement('button');
+      b.className = 'tab-btn' + (i === currentIdx ? ' active' : '');
+      b.textContent = s.title;
+      b.onclick = () => { currentIdx = i; render(); };
+      tabsEl.appendChild(b);
+    });
+  }
+  function renderProgress() {
+    progressEl.innerHTML = '';
+    sectionsDef.forEach((s, i) => {
+      const d = document.createElement('div');
+      if (i <= currentIdx) d.classList.add('done');
+      progressEl.appendChild(d);
+    });
+  }
+  function fieldHTML(f) {
+    const val = state[f.id] || '';
+    let inputHTML = '';
+    if (f.type === 'locked') {
+      inputHTML = `<div class="choice selected" style="cursor:default;">${val}</div><input type="hidden" data-id="${f.id}" value="${val.replace(/"/g,'&quot;')}">`;
+    } else if (f.type === 'textarea') {
+      inputHTML = `<textarea data-id="${f.id}">${val}</textarea>`;
+    } else if (f.type === 'choice') {
+      inputHTML = `<div class="choice-group" data-id="${f.id}">` +
+        f.options.map(o => `<div class="choice${val === o ? ' selected' : ''}" data-val="${o}">${o}</div>`).join('') +
+        `</div>`;
+    } else {
+      inputHTML = `<input type="${f.type}" data-id="${f.id}" value="${val.replace(/"/g,'&quot;')}">`;
+    }
+    return `<div class="field"><label>${f.label}</label>${inputHTML}</div>`;
+  }
+  function render() {
+    renderTabs();
+    renderProgress();
+    const s = sectionsDef[currentIdx];
+    let html = `<section class="card"><h2>${s.title}</h2><p class="hint">${s.hint}</p>`;
+    html += s.fields.map(fieldHTML).join('');
+    html += `</section>`;
+    sectionsEl.innerHTML = html;
+
+    sectionsEl.querySelectorAll('input[type=text],input[type=date],input[type=number],input[type=email],textarea').forEach(el => {
+      el.addEventListener('input', () => { state[el.dataset.id] = el.value; saveState(); });
+    });
+    sectionsEl.querySelectorAll('.choice-group').forEach(group => {
+      group.querySelectorAll('.choice').forEach(ch => {
+        ch.addEventListener('click', () => {
+          state[group.dataset.id] = ch.dataset.val;
+          group.querySelectorAll('.choice').forEach(x => x.classList.remove('selected'));
+          ch.classList.add('selected');
+          saveState();
+        });
+      });
+    });
+  }
+
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    if (!confirm('Clear all answers on this device?')) return;
+    Object.keys(state).forEach(k => delete state[k]);
+    try { localStorage.removeItem('talentIntakeDraft'); } catch(e) {}
+    saveStatus.textContent = '';
+    render();
+  });
+
+  function allFieldsFlat() {
+    const flat = [];
+    sectionsDef.forEach(s => s.fields.forEach(f => flat.push(f)));
+    return flat;
+  }
+
+  document.getElementById('submitBtn').addEventListener('click', () => {
+    const fields = allFieldsFlat();
+    const subject = 'Talent management intake — ' + (state.stage_name || state.legal_name || 'Unnamed talent');
+    const bodyLines = fields.map(f => `${f.label}:\n${state[f.id] || '(blank)'}\n`);
+    const body = bodyLines.join('\n');
+    const mailto = 'mailto:' + encodeURIComponent(DEST_EMAIL) +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
+    document.getElementById('sendStatus').textContent = 'Opening your mail app to send to ' + DEST_EMAIL + '…';
+    window.location.href = mailto;
+  });
+
+  loadState();
+  render();
+})();
+</script>
+</body>
+</html>
